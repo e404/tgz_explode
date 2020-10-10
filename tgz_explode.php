@@ -2,7 +2,6 @@
 
 function tgz_explode($data) {
 	$data = @gzdecode($data);
-	if(!$data) return null;
 	$filesize = strlen($data);
 	if($filesize<1024) return null;
 	$total = 0;
