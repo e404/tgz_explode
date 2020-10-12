@@ -3,7 +3,7 @@
 function tgz_explode($data) {
 	$data = @gzdecode($data);
 	$filesize = strlen($data);
-	if($filesize<1024) return null;
+	if($filesize<1024) return array();
 	$total = 0;
 	$result = array();
 	while($block = substr($data, $total, $total+512)) {
@@ -19,8 +19,8 @@ function tgz_explode($data) {
 		$meta['linkname'] = trim(substr($block, 157, 99));
 		$meta['databytes'] = ($meta['filesize'] + 511) & ~511;
 		if($meta['databytes'] > 0) {
-			$block = substr($data, $total+$meta['databytes']);
-			$result[] = ['meta' => $meta, 'data' => substr($block, 0, $meta['filesize'])];
+			$block = substr($data, $total + $meta['databytes'] - $meta['filesize']);
+			$result[] = ['meta' => $meta, 'data' => $block];
 			$total += $meta['databytes'];
 		}
 		$total+= 512;
