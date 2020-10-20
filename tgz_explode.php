@@ -20,7 +20,7 @@ function tgz_explode($data) {
 		$meta['databytes'] = ($meta['filesize'] + 511) & ~511;
 		if($meta['databytes'] > 0) {
 			$block = substr($data, $total + $meta['databytes'] - $meta['filesize']);
-			$result[] = ['meta' => $meta, 'data' => $block];
+			$result[] = array('meta' => $meta, 'data' => $block);
 			$total += $meta['databytes'];
 		}
 		$total+= 512;
